@@ -16,6 +16,7 @@ router
 	})
 	.get((req, res) => {
 		Task.find({})
+			.exec()
 			.then((task) => {
 				res.status(200).send(task);
 			})

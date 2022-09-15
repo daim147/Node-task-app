@@ -7,6 +7,8 @@ router
 	.get(jwtVerification)
 	.get((req, res) => {
 		User.find({})
+			.populate('tasks')
+			.exec()
 			.then((user) => {
 				res.status(200).send(user);
 			})
@@ -53,8 +55,9 @@ router
 	})
 	.delete(async (req, res) => {
 		try {
-			const user = await User.findByIdAndDelete(req.params.id);
+			const user = await User.findById(req.params.id);
 			if (!user) return res.status(404).send();
+			await user.remove();
 			res.status(200).send(user);
 		} catch (error) {
 			res.status(400).send(error);

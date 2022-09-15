@@ -5,5 +5,10 @@ mongoose.connect(
 	{
 		useNewUrlParser: true,
 	},
-	() => console.log('DATABASE CONNECTION SUCCESSFUL')
+	(error) => {
+		if (error) {
+			return console.log('Unable to connect to database');
+		}
+		console.log('Connected to database');
+	}
 );
